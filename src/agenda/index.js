@@ -400,6 +400,7 @@ export default class AgendaView extends Component {
               scrollingEnabled={this.state.calendarScrollable}
               hideExtraDays={this.state.calendarScrollable}
               firstDay={this.props.firstDay}
+              removeClippedSubviews={false}
               monthFormat={this.props.monthFormat}
               pastScrollRange={this.props.pastScrollRange}
               futureScrollRange={this.props.futureScrollRange}
