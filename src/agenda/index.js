@@ -176,6 +176,8 @@ export default class AgendaView extends Component {
     this.setState({
       selectedDay: day.clone()
     });
+    this.setScrollPadPosition(this.initialScrollPadPosition(), true);
+    this.calendar.scrollToDay(day, this.calendarOffset(), true);
   }
 
   onSnapAfterDrag(e) {
