@@ -163,6 +163,13 @@ export default class AgendaView extends Component {
       this.setScrollPadPosition(0, true);
       this.enableCalendarScrolling();
     }
+
+    if(this.headerState === 'dragged'){
+      this.setState({
+        calendarScrollable: false
+      });
+    }
+
     this.headerState = 'idle';
   }
 
@@ -260,7 +267,6 @@ export default class AgendaView extends Component {
   }
 
   chooseDay(d, optimisticScroll) {
-    console.log('chooseDay')
     const day = parseDate(d);
     this.setState({
       calendarScrollable: false,
@@ -374,21 +380,20 @@ export default class AgendaView extends Component {
     }
 
     const shouldAllowDragging = !this.props.hideKnob && !this.state.calendarScrollable;
-    const scrollPadPosition = (shouldAllowDragging ? HEADER_HEIGHT  : 0) - KNOB_HEIGHT;
+    const scrollPadPosition = (shouldAllowDragging ? HEADER_HEIGHT  : this.viewHeight) - KNOB_HEIGHT;
 
     const scrollPadStyle = {
       position: 'absolute',
-      width: 80,
+      width: this.viewWidth,
       height: KNOB_HEIGHT,
       top: scrollPadPosition,
-      left: (this.viewWidth - 80) / 2,
     };
 
     let knob = (<View style={this.styles.knobContainer}/>);
 
     if (!this.props.hideKnob) {
       const knobView = this.props.renderKnob ? this.props.renderKnob() : (<View style={this.styles.knob}/>);
-      knob = this.state.calendarScrollable ? null : (
+      knob = (
         <View style={this.styles.knobContainer}>
           <View ref={(c) => this.knob = c}>{knobView}</View>
         </View>
