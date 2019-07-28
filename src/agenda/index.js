@@ -158,9 +158,15 @@ export default class AgendaView extends Component {
     if (this.knob) {
       this.knob.setNativeProps({style: { opacity: 1 }});
     }
-
     if (this.headerState === 'touched') {
-      this.setScrollPadPosition(0, true);
+      if (this.state.calendarScrollable) {
+        // this.setScrollPadPosition(this.initialScrollPadPosition(), true);
+        // this.chooseDay(this.state.selectedDay, false);
+        this.chooseDay(this.state.selectedDay, !this.state.calendarScrollable)
+        return;
+      } else {
+        this.setScrollPadPosition(0, true);
+      }
       this.enableCalendarScrolling();
     }
 
@@ -183,7 +189,7 @@ export default class AgendaView extends Component {
     this.setState({
       selectedDay: day.clone()
     });
-    this.setScrollPadPosition(this.initialScrollPadPosition(), true);
+    // this.setScrollPadPosition(this.initialScrollPadPosition(), true);
     this.calendar.scrollToDay(day, this.calendarOffset(), true);
   }
 
